@@ -5,10 +5,6 @@ module Envin
     extend self
     attr_reader :option
     def parse(args=ARGV)
-      opts = {
-        rootelement: "production"
-      }
-
       parser = OptionParser.new do |opt_parser|
         opt_parser.on '-f', '--filepath FILENAME', 'file path' do |arg|
           opts[:filepath] = File.expand_path(arg)
