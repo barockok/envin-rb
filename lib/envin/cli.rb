@@ -19,6 +19,10 @@ module Envin
         opt_parser.on '-r', '--root-element ELEMENT', 'root element' do |arg|
           opts[:rootelement] = arg
         end
+
+        opt_parser.on '-o', '--output FILENAME', 'root element' do |arg|
+          opts[:targetfile] = arg
+        end
       end
 
       parser.on_tail "-h", "--help", "Show help" do
@@ -35,7 +39,7 @@ module Envin
         puts "File path & prefix is required"
         exit(1)
       end
-      Converter.overwrite(option[:filepath], option[:prefix], option[:rootelement])
+      Converter.overwrite(source_file: option[:filepath], prefix: option[:prefix], root_element: option[:rootelement], target_file: option[:targetfile] )
     end
   end
 end

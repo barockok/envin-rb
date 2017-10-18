@@ -47,9 +47,9 @@ module Envin
       end
     end
 
-    def overwrite file, prefix, root_element="production"
-      file_exist     = File.exist?(file)
-      config_content = file_exist ? load_yaml(file, root_element) : {}
+    def overwrite source_file:, target_file: false , prefix:, root_element: "production"
+      target_file = source_file if !target_file
+      config_content = File.exist?(source_file) ? load_yaml(source_file, root_element) : {}
       config_env     = build_yaml_from_env(prefix)
 
       root = {}
@@ -58,10 +58,9 @@ module Envin
       else
         root = config_content.merge(config_env)
       end
-      new_file_content = YAML.dump(root)
 
-      File.delete(file) if file_exist
-      File.write(file, new_file_content)
+      File.delete(target_file) if File.exist?(target_file)
+      File.write(target_file, YAML.dump(root))
     end
   end
 end
