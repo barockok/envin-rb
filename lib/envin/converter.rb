@@ -26,13 +26,13 @@ module Envin
     end
 
     def build_yaml_from_env prefix
-      env_prefix = ENV.select{|k,v| k =~ /#{prefix}/ }
+      env_prefix = ENV.select{|k,v| k =~ /^#{prefix}/ }
       coll = []
       lines = ""
       Hash[env_prefix.sort].each do |key, v|
         key_split = key.split("__")
         if key_split.length == 1
-          lines += "#{key.gsub(prefix, '').downcase}: #{v}\n"
+          lines += "#{key.gsub(/^#{prefix}/, '').downcase}: #{v}\n"
         elsif key_split.length > 1
           key_split[0] = key_split[0].gsub(prefix, '').downcase
           child_line, coll = build_child_split(key_split, v, coll)
@@ -51,7 +51,7 @@ module Envin
       target_file = source_file if !target_file
       config_content = File.exist?(source_file) ? load_yaml(source_file, root_element) : {}
       config_env     = build_yaml_from_env(prefix)
-
+      return if config_env.keys.size == 0
       root = {}
       if root_element
         root[root_element] = config_content.merge(config_env)
@@ -59,7 +59,6 @@ module Envin
         root = config_content.merge(config_env)
       end
 
-      File.delete(target_file) if File.exist?(target_file)
       File.write(target_file, YAML.dump(root))
     end
   end
