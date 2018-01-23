@@ -19,5 +19,5 @@ Gem::Specification.new do |spec|
   end
   spec.executables   = ["envin"]
   spec.require_paths = ["lib"]
-  spec.add_dependency "deep_merge", "~> 1.2.1"
+  spec.add_dependency "deep_merge", "~> 1.1.1"
 end
