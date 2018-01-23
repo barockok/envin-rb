@@ -1,5 +1,6 @@
 require 'yaml'
 require 'erb'
+require 'deep_merge'
 
 module Envin
   module Converter
@@ -54,7 +55,7 @@ module Envin
       return if config_env.keys.size == 0
       root = {}
       if root_element
-        root[root_element] = config_content.merge(config_env)
+        root[root_element] = config_content.deep_merge(config_env)
       else
         root = config_content.merge(config_env)
       end

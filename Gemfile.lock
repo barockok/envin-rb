@@ -1,11 +1,13 @@
 PATH
   remote: .
   specs:
-    envin (0.1.6)
+    envin (0.1.7)
+      deep_merge (~> 1.2.1)
 
 GEM
   remote: https://rubygems.org/
   specs:
+    deep_merge (1.2.1)
 
 PLATFORMS
   ruby
